@@ -2,8 +2,8 @@
 REM Script to build and run the Salary API Docker container
 
 set IMAGE_NAME=salary-api
-set CONTAINER_PORT=8081
-set HOST_PORT=8082
+set CONTAINER_PORT=8089
+set HOST_PORT=8088
 
 echo Building Docker image: %IMAGE_NAME%
 docker build -t %IMAGE_NAME% .
