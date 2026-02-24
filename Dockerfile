@@ -1,5 +1,5 @@
 # Build stage
-FROM eclipse-temurin:17-jdk-alpine AS build
+FROM eclipse-temurin:17-jdk AS build
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ WORKDIR /app
 COPY pom.xml mvnw ./
 COPY .mvn .mvn
 
-# ✅ FIX: give execute permission to mvnw
+# Give execute permission to mvnw
 RUN chmod +x mvnw
 
 # Download dependencies
@@ -20,14 +20,15 @@ COPY src src
 RUN ./mvnw clean package -DskipTests
 
 # Runtime stage
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 
 # Copy the JAR from build stage
+# Note: Ensure the filename matches your actual pom.xml artifactId/version
 COPY --from=build /app/target/salary-api-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose port
+# Expose port (Matches your existing EXPOSE)
 EXPOSE 8081
 
 # Run the application
